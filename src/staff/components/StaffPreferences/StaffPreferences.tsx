@@ -30,10 +30,10 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
       <CardContent>
         <SingleAutocompleteSelectField
           choices={Object.values(Locale).map(locale => ({
-            label: capitalize(localeNames[locale]),
+            label: capitalize(localeNames[locale].displayName),
             value: locale,
           }))}
-          displayValue={localeNames[locale]}
+          displayValue={localeNames[locale].displayName}
           helperText={intl.formatMessage({
             id: "JJgJwi",
             defaultMessage:

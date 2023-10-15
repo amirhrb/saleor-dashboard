@@ -3,6 +3,8 @@ import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import React from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
+import { defaultDirection, RIGHT_TO_LEFT } from "./consts";
+
 export enum Locale {
   AR = "ar",
   AZ = "az",
@@ -54,49 +56,60 @@ interface StructuredMessage {
 }
 type LocaleMessages = Record<string, StructuredMessage>;
 
-export const localeNames: Record<Locale, string> = {
-  [Locale.AR]: "العربيّة",
-  [Locale.AZ]: "Azərbaycanca",
-  [Locale.BG]: "български",
-  [Locale.BN]: "বাংলা",
-  [Locale.CA]: "català",
-  [Locale.CS]: "česky",
-  [Locale.DA]: "dansk",
-  [Locale.DE]: "Deutsch",
-  [Locale.EL]: "Ελληνικά",
-  [Locale.EN]: "English",
-  [Locale.ES]: "español",
-  [Locale.ES_CO]: "español de Colombia",
-  [Locale.ET]: "eesti",
-  [Locale.FA]: "فارسی",
-  [Locale.FR]: "français",
-  [Locale.HI]: "Hindi",
-  [Locale.HU]: "Magyar",
-  [Locale.HY]: "հայերեն",
-  [Locale.ID]: "Bahasa Indonesia",
-  [Locale.IS]: "Íslenska",
-  [Locale.IT]: "italiano",
-  [Locale.JA]: "日本語",
-  [Locale.KO]: "한국어",
-  [Locale.MN]: "Mongolian",
-  [Locale.NB]: "norsk (bokmål)",
-  [Locale.NL]: "Nederlands",
-  [Locale.PL]: "polski",
-  [Locale.PT]: "Português",
-  [Locale.PT_BR]: "Português Brasileiro",
-  [Locale.RO]: "Română",
-  [Locale.RU]: "Русский",
-  [Locale.SK]: "Slovensky",
-  [Locale.SL]: "Slovenščina",
-  [Locale.SQ]: "shqip",
-  [Locale.SR]: "српски",
-  [Locale.SV]: "svenska",
-  [Locale.TH]: "ภาษาไทย",
-  [Locale.TR]: "Türkçe",
-  [Locale.UK]: "Українська",
-  [Locale.VI]: "Tiếng Việt",
-  [Locale.ZH_HANS]: "简体中文",
-  [Locale.ZH_HANT]: "繁體中文",
+type LocalNames = Record<Locale, { displayName: string; direction: string }>;
+
+export const localeNames: LocalNames = {
+  [Locale.AR]: {
+    displayName: "العربيّة",
+    direction: RIGHT_TO_LEFT,
+  },
+  [Locale.AZ]: { displayName: "Azərbaycanca", direction: defaultDirection },
+  [Locale.BG]: { displayName: "български", direction: defaultDirection },
+  [Locale.BN]: { displayName: "বাংলা", direction: defaultDirection },
+  [Locale.CA]: { displayName: "català", direction: defaultDirection },
+  [Locale.CS]: { displayName: "česky", direction: defaultDirection },
+  [Locale.DA]: { displayName: "dansk", direction: defaultDirection },
+  [Locale.DE]: { displayName: "Deutsch", direction: defaultDirection },
+  [Locale.EL]: { displayName: "Ελληνικά", direction: defaultDirection },
+  [Locale.EN]: { displayName: "English", direction: defaultDirection },
+  [Locale.ES]: { displayName: "español", direction: defaultDirection },
+  [Locale.ES_CO]: {
+    displayName: "español de Colombia",
+    direction: defaultDirection,
+  },
+  [Locale.ET]: { displayName: "eesti", direction: defaultDirection },
+  [Locale.FA]: { displayName: "فارسی", direction: RIGHT_TO_LEFT },
+  [Locale.FR]: { displayName: "français", direction: defaultDirection },
+  [Locale.HI]: { displayName: "Hindi", direction: defaultDirection },
+  [Locale.HU]: { displayName: "Magyar", direction: defaultDirection },
+  [Locale.HY]: { displayName: "հայերեն", direction: defaultDirection },
+  [Locale.ID]: { displayName: "Bahasa Indonesia", direction: defaultDirection },
+  [Locale.IS]: { displayName: "Íslenska", direction: defaultDirection },
+  [Locale.IT]: { displayName: "italiano", direction: defaultDirection },
+  [Locale.JA]: { displayName: "日本語", direction: defaultDirection },
+  [Locale.KO]: { displayName: "한국어", direction: defaultDirection },
+  [Locale.MN]: { displayName: "Mongolian", direction: defaultDirection },
+  [Locale.NB]: { displayName: "norsk (bokmål)", direction: defaultDirection },
+  [Locale.NL]: { displayName: "Nederlands", direction: defaultDirection },
+  [Locale.PL]: { displayName: "polski", direction: defaultDirection },
+  [Locale.PT]: { displayName: "Português", direction: defaultDirection },
+  [Locale.PT_BR]: {
+    displayName: "Português Brasileiro",
+    direction: defaultDirection,
+  },
+  [Locale.RO]: { displayName: "Română", direction: defaultDirection },
+  [Locale.RU]: { displayName: "Русский", direction: defaultDirection },
+  [Locale.SK]: { displayName: "Slovensky", direction: defaultDirection },
+  [Locale.SL]: { displayName: "Slovenščina", direction: defaultDirection },
+  [Locale.SQ]: { displayName: "shqip", direction: defaultDirection },
+  [Locale.SR]: { displayName: "српски", direction: defaultDirection },
+  [Locale.SV]: { displayName: "svenska", direction: defaultDirection },
+  [Locale.TH]: { displayName: "ภาษาไทย", direction: defaultDirection },
+  [Locale.TR]: { displayName: "Türkçe", direction: defaultDirection },
+  [Locale.UK]: { displayName: "Українська", direction: defaultDirection },
+  [Locale.VI]: { displayName: "Tiếng Việt", direction: defaultDirection },
+  [Locale.ZH_HANS]: { displayName: "简体中文", direction: defaultDirection },
+  [Locale.ZH_HANT]: { displayName: "繁體中文", direction: defaultDirection },
 };
 
 const dotSeparator = "_dot_";
@@ -129,6 +142,10 @@ const LocaleProvider: React.FC = ({ children }) => {
   const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
   const [messages, setMessages] = React.useState(undefined);
 
+  const setDirection = (locale: string) => {
+    document.body.dir = localeNames[locale].direction;
+  };
+
   React.useEffect(() => {
     async function changeLocale() {
       if (locale !== defaultLocale) {
@@ -138,6 +155,7 @@ const LocaleProvider: React.FC = ({ children }) => {
       } else {
         setMessages(undefined);
       }
+      setDirection(locale);
     }
 
     changeLocale();
