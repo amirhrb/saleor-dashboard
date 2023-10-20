@@ -143,7 +143,9 @@ const LocaleProvider: React.FC = ({ children }) => {
   const [messages, setMessages] = React.useState(undefined);
 
   const setDirection = (locale: string) => {
-    document.body.dir = localeNames[locale].direction;
+    const newLocaleDir = localeNames[locale].direction;
+    const needsToChangeDir = document.body.dir !== newLocaleDir;
+    if (needsToChangeDir) document.body.dir = newLocaleDir;
   };
 
   React.useEffect(() => {

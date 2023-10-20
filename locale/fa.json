@@ -2185,10 +2185,10 @@
   "5dyOs0": { "string": "هیچ پرداختی برای تحویل وجود ندارد." },
   "bFhzRX": { "string": "هیچ محصولی در انبار موجود نیست" },
   "c0H45L": {
-    "string": "{amount, plural,one {یک سفارش آماده انجام است} other {{amount} سفارشات آماده انجام هستند}}"
+    "string": "{amount, plural,one {یک سفارش آماده انجام} other {{amount} سفارش آماده انجام}}"
   },
   "md326v": {
-    "string": "{amount, plural,one {One payment to capture} other {{amount} پرداخت برای گرفتن}}"
+    "string": "{amount, plural,one {One payment to capture} other {{amount} پرداخت برای انجام}}"
   },
   "cdxwA8": {
     "string": "{amount, plural,one {یک محصول موجود نیست} other {{amount} محصول موجود نیست}}"

@@ -70,7 +70,7 @@ export const UserControls = () => {
           />
         </Dropdown.Trigger>
         <Dropdown.Content align="end">
-          <Box __minWidth={192}>
+          <Box __minWidth={192} __zIndex={9000}>
             <List
               padding={2}
               borderRadius={4}
